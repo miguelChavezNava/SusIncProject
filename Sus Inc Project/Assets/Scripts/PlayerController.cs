@@ -16,10 +16,6 @@ public class PlayerController : MonoBehaviour
     {
         playerRB = GetComponent<Rigidbody>();
     }
-    void OnCollisionStay(Collision collision)
-    {
-        isGrounded = true;
-    }
     // Update is called once per frame
     void Update()
     {
@@ -37,5 +33,6 @@ public class PlayerController : MonoBehaviour
         {
             SceneManager.LoadScene("End");
         }
+        isGrounded = true;
     }
 }
