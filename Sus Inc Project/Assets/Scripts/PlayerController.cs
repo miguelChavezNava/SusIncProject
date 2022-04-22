@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded;
     private Rigidbody playerRB;
     private float jumpForce = 2;
+    public GameObject bullet;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +26,11 @@ public class PlayerController : MonoBehaviour
         {
             playerRB.AddForce(jump * jumpForce, ForceMode.Impulse);
             isGrounded = false;
+        }
+        if(Input.GetButtonDown("Fire1") && !BulletController.isFired)
+        {
+            Instantiate(bullet, transform.position, transform.rotation);
+            BulletController.setIsFired(true);
         }
     }
     private void OnCollisionEnter(Collision collision)
