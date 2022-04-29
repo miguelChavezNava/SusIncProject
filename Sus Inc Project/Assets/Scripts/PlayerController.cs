@@ -12,10 +12,14 @@ public class PlayerController : MonoBehaviour
     private Rigidbody playerRB;
     private float jumpForce = 2;
     public GameObject bullet;
+    public float playerPosX;
+    public float health = 10;
+
     // Start is called before the first frame update
     void Start()
     {
         playerRB = GetComponent<Rigidbody>();
+        Debug.Log(health);
     }
     // Update is called once per frame
     void Update()
@@ -29,8 +33,10 @@ public class PlayerController : MonoBehaviour
         }
         if(Input.GetButtonDown("Fire1") && !BulletController.isFired)
         {
-            Instantiate(bullet, transform.position, transform.rotation);
+            BulletController.setShooter("player");
+            Instantiate(bullet, new Vector3(transform.position.x+1,transform.position.y,transform.position.z), transform.rotation);
             BulletController.setIsFired(true);
+            playerPosX = transform.position.x;
         }
     }
     private void OnCollisionEnter(Collision collision)

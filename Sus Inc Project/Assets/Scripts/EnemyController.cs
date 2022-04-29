@@ -6,10 +6,12 @@ public class EnemyController : MonoBehaviour
 {
     public float speed = 5.0f;
     public bool turnLeft = false;
+    public GameObject bullet;
+    public float enemyPosX;
     // Start is called before the first frame update
     void Start()
     {
-        
+        InvokeRepeating("shootBullets", 0.1f, 2);
     }
 
     // Update is called once per frame
@@ -31,5 +33,11 @@ public class EnemyController : MonoBehaviour
         {
             turnLeft = false;
         }
+    }
+    void shootBullets()
+    {
+        BulletController.setShooter("enemy");
+        enemyPosX = transform.position.x;
+        Instantiate(bullet, new Vector3(transform.position.x - 1, transform.position.y, transform.position.z), transform.rotation);
     }
 }

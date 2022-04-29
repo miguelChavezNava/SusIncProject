@@ -429,7 +429,7 @@ GameObject:
   - component: {fileID: 1315245649}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -463,6 +463,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 8810680999489137146, guid: e6812f7bd20d3c84f90d939c3a833deb, type: 3}
+  playerPosX: 0
+  health: 10
 --- !u!65 &1315245651
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -768,3 +770,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   turnLeft: 0
+  bullet: {fileID: 8810680999489137146, guid: e6812f7bd20d3c84f90d939c3a833deb, type: 3}
+  enemyPosX: 0
