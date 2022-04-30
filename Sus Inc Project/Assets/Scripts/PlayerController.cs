@@ -40,6 +40,11 @@ public class PlayerController : MonoBehaviour
             Instantiate(bullet, new Vector3(transform.position.x+1,transform.position.y,transform.position.z), transform.rotation);
             BulletController.setIsFired(true);
         }
+        if(transform.position.y <= -5)
+        {
+            lives--;
+            SceneManager.LoadScene("Main");
+        }
     }
     private void OnCollisionEnter(Collision collision)
     {
