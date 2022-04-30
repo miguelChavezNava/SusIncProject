@@ -2,38 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletController : MonoBehaviour
+public class EnemyBulletController : MonoBehaviour
 {
-    private float speed = 10.0f;
-    public static bool isFired = false;
+    private EnemyController enemyCtrlScript;
     private PlayerController playerCtrlScript;
-   
+    private float speed = 10.0f;
     // Start is called before the first frame update
     void Start()
     {
+        enemyCtrlScript = GameObject.Find("Enemy").GetComponent<EnemyController>();
         playerCtrlScript = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.right * speed * Time.deltaTime);
-        if (transform.position.x >= (playerCtrlScript.playerPosX + 10))
+        transform.Translate(Vector3.left * speed * Time.deltaTime);
+        if (transform.position.x <= (enemyCtrlScript.enemyPosX - 10))
         {
             Destroy(gameObject);
-            setIsFired(false);
         }
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "EndGame")
+        if (other.gameObject.tag == "Player")
         {
-            Destroy(other.gameObject);
-            setIsFired(false);
+            playerCtrlScript.health--;
+            Debug.Log(playerCtrlScript.health);
         }
-    }
-    public static void setIsFired(bool change)
-    {
-        isFired = change;
     }
 }

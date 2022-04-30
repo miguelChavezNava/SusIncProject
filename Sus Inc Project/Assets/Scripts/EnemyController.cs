@@ -6,7 +6,7 @@ public class EnemyController : MonoBehaviour
 {
     public float speed = 5.0f;
     public bool turnLeft = false;
-    public GameObject bullet;
+    public GameObject enemyBullet;
     public float enemyPosX;
     // Start is called before the first frame update
     void Start()
@@ -36,8 +36,7 @@ public class EnemyController : MonoBehaviour
     }
     void shootBullets()
     {
-        BulletController.setShooter("enemy");
         enemyPosX = transform.position.x;
-        Instantiate(bullet, new Vector3(transform.position.x - 1, transform.position.y, transform.position.z), transform.rotation);
+        Instantiate(enemyBullet, new Vector3(transform.position.x - 1, transform.position.y, transform.position.z), transform.rotation);
     }
 }

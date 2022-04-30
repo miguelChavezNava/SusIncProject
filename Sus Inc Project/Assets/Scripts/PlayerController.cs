@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -14,12 +15,14 @@ public class PlayerController : MonoBehaviour
     public GameObject bullet;
     public float playerPosX;
     public float health = 10;
+    public static float lives = 3;
+    
 
     // Start is called before the first frame update
     void Start()
     {
         playerRB = GetComponent<Rigidbody>();
-        Debug.Log(health);
+        
     }
     // Update is called once per frame
     void Update()
@@ -33,17 +36,17 @@ public class PlayerController : MonoBehaviour
         }
         if(Input.GetButtonDown("Fire1") && !BulletController.isFired)
         {
-            BulletController.setShooter("player");
+            playerPosX = transform.position.x;
             Instantiate(bullet, new Vector3(transform.position.x+1,transform.position.y,transform.position.z), transform.rotation);
             BulletController.setIsFired(true);
-            playerPosX = transform.position.x;
         }
     }
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.CompareTag("EndGame"))
         {
-            SceneManager.LoadScene("End");
+            lives--;
+            SceneManager.LoadScene("Main");
         }
         isGrounded = true;
     }
