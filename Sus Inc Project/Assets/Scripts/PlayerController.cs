@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+    public GameObject player;
     private float speed = 5.0f;
     private float horizontalInput;
     private Vector3 jump = new Vector3(0, 2, 0);
@@ -16,6 +17,7 @@ public class PlayerController : MonoBehaviour
     public float playerPosX;
     public float health = 10;
     public static float lives = 3;
+  
     
 
     // Start is called before the first frame update
@@ -54,5 +56,14 @@ public class PlayerController : MonoBehaviour
             SceneManager.LoadScene("Main");
         }
         isGrounded = true;
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Platform"))
+        {
+            playerRB.AddForce(new Vector3(10,0,0)*10, ForceMode.Impulse);
+
+        }
+
     }
 }

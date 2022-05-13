@@ -6,6 +6,7 @@ TagManager:
   tags:
   - EndGame
   - Bullet
+  - Platform
   layers:
   - Default
   - TransparentFX
