@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI healthText;
     public TextMeshProUGUI livesText;
     private PlayerController playerCtrlScript;
+    public AudioSource backgroundMusic;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +19,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        backgroundMusic.Play();
         healthText.text = "Health: " + playerCtrlScript.health;
         livesText.text = "Lives: " + PlayerController.lives;
         if(playerCtrlScript.health <= 0)

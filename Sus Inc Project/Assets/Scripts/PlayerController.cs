@@ -7,19 +7,19 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     //public GameObject player;
-    private float speed = 5.0f;
+    private float speed = 13.0f;
     private float horizontalInput;
-    private Vector3 jump = new Vector3(0, 2, 0);
+    private Vector3 jump = new Vector3(0, 1, 0);
     private bool isGrounded;
     private Rigidbody playerRB;
-    private float jumpForce = 2;
+    private float jumpForce = 4;
     public GameObject bullet;
     public float playerPosX;
     public float health = 10;
     public static float lives = 3;
     private BulletController bulletScript;
-  
-    
+    public AudioSource jumpSound;
+    public AudioSource gunSound;
 
     // Start is called before the first frame update
     void Start()
@@ -36,20 +36,20 @@ public class PlayerController : MonoBehaviour
         {
             playerRB.AddForce(jump * jumpForce, ForceMode.Impulse);
             isGrounded = false;
+            jumpSound.Play();
         }
         if(Input.GetButtonDown("Fire1") && bulletScript.getIsFired())
         {
             playerPosX = transform.position.x;
             bulletScript.setIsFired(true);
+            gunSound.Play();
             if(horizontalInput < 0)
             {
-                Debug.Log("Shoot");
                 Shoot(-1);
                 bulletScript.updateDirection(false);
             }
             else
             {
-                Debug.Log("Shoot");
                 Shoot(1);
                 bulletScript.updateDirection(true);
             }
@@ -65,16 +65,20 @@ public class PlayerController : MonoBehaviour
         if(collision.gameObject.CompareTag("EndGame"))
         {
             lives--;
-            SceneManager.LoadScene("Main");
+            SceneManager.LoadScene("Level 1");
         }
         isGrounded = true;
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            lives--;
+            SceneManager.LoadScene("Level 1");
+        }
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Platform"))
+        if(other.gameObject.CompareTag("door"))
         {
-            playerRB.AddForce(new Vector3(10,0,0)*10, ForceMode.Impulse);
-
+            SceneManager.LoadScene("Win");
         }
 
     }
