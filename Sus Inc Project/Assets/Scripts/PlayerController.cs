@@ -7,16 +7,17 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     public GameObject player;
-    private float speed = 5.0f;
+    private float speed = 11.0f;
     private float horizontalInput;
-    private Vector3 jump = new Vector3(0, 2, 0);
+    private Vector3 jump = new Vector3(0, 1, 0);
     private bool isGrounded;
     private Rigidbody playerRB;
-    private float jumpForce = 2;
+    private float jumpForce = 4f;
     public GameObject bullet;
     public float playerPosX;
     public float health = 10;
     public static float lives = 3;
+
   
     
 
@@ -24,18 +25,20 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         playerRB = GetComponent<Rigidbody>();
+
         
     }
     // Update is called once per frame
     void Update()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
-        transform.Translate(Vector3.right * speed * horizontalInput * Time.deltaTime);
+        
         if(Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             playerRB.AddForce(jump * jumpForce, ForceMode.Impulse);
             isGrounded = false;
         }
+        horizontalInput = Input.GetAxis("Horizontal");
+        transform.Translate(Vector3.right * speed * horizontalInput * Time.deltaTime);
         if(Input.GetButtonDown("Fire1") && !BulletController.isFired)
         {
             playerPosX = transform.position.x;
@@ -47,23 +50,32 @@ public class PlayerController : MonoBehaviour
             lives--;
             SceneManager.LoadScene("Main");
         }
+
     }
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.CompareTag("EndGame"))
         {
             lives--;
-            SceneManager.LoadScene("Main");
+            SceneManager.LoadScene("Level 1");
         }
+        if(collision.gameObject.CompareTag("Ground"))
+        {
+            lives--;
+            SceneManager.LoadScene("Level 1");
+
+
+
+        }
+        if(collision.gameObject.CompareTag("door"))
+        {
+           SceneManager.LoadScene("Level 2");
+
+
+
+        }
+        
         isGrounded = true;
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Platform"))
-        {
-            playerRB.AddForce(new Vector3(10,0,0)*10, ForceMode.Impulse);
-
-        }
-
-    }
+   
 }

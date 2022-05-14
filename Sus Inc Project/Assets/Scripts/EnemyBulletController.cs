@@ -6,7 +6,7 @@ public class EnemyBulletController : MonoBehaviour
 {
     private EnemyController enemyCtrlScript;
     private PlayerController playerCtrlScript;
-    private float speed = 10.0f;
+    private float speed = 20.0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +18,7 @@ public class EnemyBulletController : MonoBehaviour
     void Update()
     {
         transform.Translate(Vector3.left * speed * Time.deltaTime);
-        if (transform.position.x <= (enemyCtrlScript.enemyPosX - 10))
+        if (transform.position.x <= (enemyCtrlScript.enemyPosX - 40))
         {
             Destroy(gameObject);
         }
