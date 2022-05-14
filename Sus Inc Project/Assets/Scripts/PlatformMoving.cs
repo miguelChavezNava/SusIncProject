@@ -2,17 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
+public class PlatformMoving : MonoBehaviour
 {
-    public float speed = 5.0f;
     public bool turnLeft = false;
-    public GameObject enemyBullet;
-
-    public float enemyPosX;
+    public float speed = 5.0f;
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("shootBullets", 0.1f, 1f);
+        
     }
 
     // Update is called once per frame
@@ -26,20 +23,13 @@ public class EnemyController : MonoBehaviour
         {
             transform.Translate(Vector3.left * speed * Time.deltaTime);
         }
-        if(transform.position.x >= 40)
+        if(transform.position.x >= 9)
         {
             turnLeft = true;
         }
-        if(transform.position.x <= 30)
+        if(transform.position.x <= -1.5)
         {
             turnLeft = false;
         }
     }
-    void shootBullets()
-    {
-        enemyPosX = transform.position.x;
-        Instantiate(enemyBullet, new Vector3(transform.position.x - 1, transform.position.y, transform.position.z), transform.rotation);
-        
-    }
-  
 }
