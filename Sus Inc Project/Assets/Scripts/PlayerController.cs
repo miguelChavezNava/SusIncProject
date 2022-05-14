@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    public GameObject player;
+    //public GameObject player;
     private float speed = 5.0f;
     private float horizontalInput;
     private Vector3 jump = new Vector3(0, 2, 0);
@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     public float playerPosX;
     public float health = 10;
     public static float lives = 3;
+    private BulletController bulletScript;
   
     
 
@@ -24,7 +25,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         playerRB = GetComponent<Rigidbody>();
-        
+        bulletScript = bullet.GetComponent<BulletController>();
     }
     // Update is called once per frame
     void Update()
@@ -36,11 +37,22 @@ public class PlayerController : MonoBehaviour
             playerRB.AddForce(jump * jumpForce, ForceMode.Impulse);
             isGrounded = false;
         }
-        if(Input.GetButtonDown("Fire1") && !BulletController.isFired)
+        if(Input.GetButtonDown("Fire1") && bulletScript.getIsFired())
         {
             playerPosX = transform.position.x;
-            Instantiate(bullet, new Vector3(transform.position.x+1,transform.position.y,transform.position.z), transform.rotation);
-            BulletController.setIsFired(true);
+            bulletScript.setIsFired(true);
+            if(horizontalInput < 0)
+            {
+                Debug.Log("Shoot");
+                Shoot(-1);
+                bulletScript.updateDirection(false);
+            }
+            else
+            {
+                Debug.Log("Shoot");
+                Shoot(1);
+                bulletScript.updateDirection(true);
+            }
         }
         if(transform.position.y <= -5)
         {
@@ -65,5 +77,13 @@ public class PlayerController : MonoBehaviour
 
         }
 
+    }
+    public void Shoot(int direction)
+    {
+        Instantiate(bullet, new Vector3(transform.position.x + direction, transform.position.y, transform.position.z), bullet.transform.rotation);
+    }
+    public float getInput()
+    {
+        return horizontalInput;
     }
 }
