@@ -20,12 +20,16 @@ public class PlayerController : MonoBehaviour
     private BulletController bulletScript;
     public AudioSource jumpSound;
     public AudioSource gunSound;
+    private bool onPlatform = false;
+    public GameObject movingPlatform;
+    public HealthBar healthBar;
 
     // Start is called before the first frame update
     void Start()
     {
         playerRB = GetComponent<Rigidbody>();
         bulletScript = bullet.GetComponent<BulletController>();
+        healthBar.setMaxHealth(health);
     }
     // Update is called once per frame
     void Update()
@@ -37,6 +41,8 @@ public class PlayerController : MonoBehaviour
             playerRB.AddForce(jump * jumpForce, ForceMode.Impulse);
             isGrounded = false;
             jumpSound.Play();
+            transform.parent = null;
+            onPlatform = false;
         }
         if(Input.GetButtonDown("Fire1") && bulletScript.getIsFired())
         {
@@ -59,6 +65,10 @@ public class PlayerController : MonoBehaviour
             lives--;
             SceneManager.LoadScene("Main");
         }
+        if(onPlatform)
+        {
+            transform.parent = movingPlatform.transform;
+        }
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -73,6 +83,11 @@ public class PlayerController : MonoBehaviour
             lives--;
             SceneManager.LoadScene("Level 1");
         }
+        if(collision.gameObject.CompareTag("Moving Platform"))
+        {
+            onPlatform = true;
+        }
+            
     }
     private void OnTriggerEnter(Collider other)
     {

@@ -28,7 +28,7 @@ public class EnemyBulletController : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             playerCtrlScript.health--;
-            Debug.Log(playerCtrlScript.health);
+            playerCtrlScript.healthBar.setHealth(playerCtrlScript.health);
         }
     }
 }

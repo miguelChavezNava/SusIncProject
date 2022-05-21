@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
-    private float speed = 10.0f;
+    private float speed = 20.0f;
     public bool isFired = false;
     private PlayerController playerCtrlScript;
     private bool direction = false;
@@ -31,38 +31,16 @@ public class BulletController : MonoBehaviour
             shootDirection = 1;
             setIsFired(false);
         }
-        if (transform.position.x >= (playerCtrlScript.playerPosX + 10))
+        if (transform.position.x >= (playerCtrlScript.playerPosX + 15))
         {
             Destroy(gameObject);
             setIsFired(false);
         }
-        if (transform.position.x <= (playerCtrlScript.playerPosX - 10))
+        if (transform.position.x <= (playerCtrlScript.playerPosX - 15))
         {
             Destroy(gameObject);
             setIsFired(false);
         }
-        /*if (direction && isFired)
-        {
-            //transform.Translate(Vector3.right * speed * Time.deltaTime);
-            shootDirection = 1;
-            
-            if (transform.position.x >= (playerCtrlScript.playerPosX + 10))
-            {
-                Destroy(gameObject);
-                setIsFired(false);
-            }
-        }
-        else if(!direction && isFired)
-        {
-            //transform.Translate(Vector3.left * speed * Time.deltaTime);
-            shootDirection = -1;
-            
-            if (transform.position.x <= (playerCtrlScript.playerPosX - 10))
-            {
-                Destroy(gameObject);
-                setIsFired(false);
-            }
-        }*/
     }
     private void OnTriggerEnter(Collider other)
     {
